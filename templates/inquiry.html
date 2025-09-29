@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Inquiry Form</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #667eea, #764ba2);
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .container h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #444;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 5px rgba(102, 126, 234, 0.5);
+      outline: none;
+    }
+    .form-group input[type="submit"] {
+      background: linear-gradient(to right, #667eea, #764ba2);
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .form-group input[type="submit"]:hover {
+      background: linear-gradient(to right, #764ba2, #667eea);
+      transform: scale(1.02);
+    }
+    .message {
+      display: none;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      border-radius: 8px;
+      text-align: center;
+      animation: fadein 0.5s ease forwards;
+    }
+    @keyframes fadein {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const category = urlParams.get("category");
+
+      const serviceSelect = document.getElementById("service");
+      let services = [];
+
+      if (category === "development") {
+        services = [
+          "Web Development",
+          "Android Development",
+          "Desktop Application"
+        ];
+      } else if (category === "ai") {
+        services = [
+          "RPA",
+          "Automation",
+          "AI Monitoring"
+        ];
+      } else if (category === "training") {
+        services = [
+          "Data Science",
+          "Data Analysis",
+          "Full Stack Development",
+          "Digital Marketing"
+        ];
+      } else {
+        services = [
+          "Web Development", "Android Development", "Desktop Application",
+          "RPA", "Automation", "AI Monitoring",
+          "Data Science", "Data Analysis", "Full Stack Development", "Digital Marketing"
+        ];
+      }
+
+      services.forEach(service => {
+        const opt = document.createElement("option");
+        opt.value = service;
+        opt.text = service;
+        serviceSelect.add(opt);
+      });
+    });
+
+    function handleSubmit(event) {
+      event.preventDefault();
+      const form = document.getElementById("inquiryForm");
+      const formData = new FormData(form);
+
+      fetch('/submit_inquiry', {
+        method: 'POST',
+        body: new URLSearchParams(formData),
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          document.querySelector('.message').innerText = data.message;
+          document.querySelector('.message').style.display = 'block';
+          setTimeout(() => {
+            form.reset();
+          }, 2000);
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h2>Inquiry Form</h2>
+    <form id="inquiryForm" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required />
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required />
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="tel" id="phoneNumber" name="phoneNumber" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="service">Which service would you like to inquire about?</label>
+        <select id="service" name="service" required>
+          <!-- options dynamically added -->
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="requirement">Describe your requirement:</label>
+        <textarea id="requirement" name="requirement" rows="4" required></textarea>
+      </div>
+      <div class="form-group">
+        <input type="submit" value="Submit Inquiry" />
+      </div>
+    </form>
+    <div class="message"></div>
+  </div>
+</body>
+</html>
