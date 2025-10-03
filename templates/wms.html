@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Advanced Warehouse Management System (WMS) | ELSA Private Limited</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Font - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d47a1; /* Darker Blue for WMS */
+            --secondary-color: #f1f8e9; /* Light Greenish-Gray */
+            --accent-color: #ff9800; /* Orange/Amber for highlights */
+            --text-dark: #212529;
+            --text-light: #6c757d;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+            color: var(--text-dark);
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            background-color: #fff;
+        }
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-link:hover {
+            color: var(--primary-color) !important;
+        }
+        .btn-call-now {
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            font-weight: 600;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s;
+        }
+        .btn-call-now:hover {
+            background-color: #e68900;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1e88e5 100%);
+            color: #fff;
+            padding: 100px 0 60px 0;
+            border-bottom: 5px solid var(--accent-color);
+        }
+        .hero-title {
+            font-weight: 800;
+            font-size: 3.2rem;
+        }
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .hero-feature-pill {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-dark);
+            padding: 6px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .contact-form-card {
+            background-color: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        .contact-form-card h4 {
+            color: var(--primary-color);
+        }
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(255, 152, 0, 0.25);
+        }
+
+        /* --- Modules Section --- */
+        .modules-section {
+            padding: 80px 0;
+            background-color: var(--secondary-color);
+        }
+        .module-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            height: 100%;
+            padding: 30px;
+            text-align: center;
+            border-top: 5px solid var(--accent-color);
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border-top-color: var(--primary-color);
+        }
+        .module-icon {
+            font-size: 3.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        /* --- Detailed Features Section --- */
+        .detailed-features {
+            padding: 60px 0;
+        }
+        .feature-box {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s;
+        }
+        .feature-box:hover {
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .feature-box i {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-right: 15px;
+        }
+        .feature-box h5 {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            background-color: var(--accent-color);
+            padding: 50px 0;
+            color: var(--text-dark);
+        }
+        .cta-section .btn-light {
+             color: var(--primary-color);
+             font-weight: bold;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--text-dark);
+            color: #fff;
+            padding: 40px 0;
+        }
+        footer a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">ELSA Private Limited</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                <li class="nav-item"><a class="nav-link" href="#modules">Core Modules</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features">Advanced Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#benefits">Benefits</a></li>
+                <li class="nav-item">
+                    <a href="tel:+919811808342" class="btn btn-call-now ms-lg-3"><i class="fas fa-phone-alt"></i> Call for Demo</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section & Contact Form -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7 text-lg-start text-center mb-5 mb-lg-0">
+                <h1 class="hero-title">Real-Time Advanced <br>Warehouse Management System (WMS)</h1>
+                <p class="hero-subtitle">Automate, Optimize, and Control Warehouse Operations with 360-Degree Visibility.</p>
+
+                <div class="mb-4">
+                    <span class="hero-feature-pill"><i class="fas fa-cubes"></i> Real-Time Inventory</span>
+                    <span class="hero-feature-pill"><i class="fas fa-barcode"></i> Barcode/QR Integration</span>
+                    <span class="hero-feature-pill"><i class="fas fa-map-marked-alt"></i> Location Optimization</span>
+                </div>
+
+                <a href="#modules" class="btn btn-warning btn-lg me-3 fw-bold"><i class="fas fa-dolly-flatbed"></i> View Modules</a>
+                <a href="#contact" class="btn btn-outline-light btn-lg">Request a Demo</a>
+            </div>
+            <div class="col-lg-5">
+                <div class="contact-form-card" id="contact">
+                    <h4 class="text-center mb-4 fw-bold">Schedule Your Free Live Demo</h4>
+                    <form>
+                        <div class="mb-3"><input type="text" class="form-control" placeholder="Full Name" required></div>
+                        <div class="mb-3"><input type="email" class="form-control" placeholder="Business Email" required></div>
+                        <div class="mb-3"><input type="tel" class="form-control" placeholder="Mobile Number" required></div>
+                        <div class="mb-3"><input type="text" class="form-control" placeholder="Company Name" required></div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="3" placeholder="Your WMS Requirements"></textarea>
+                        </div>
+                        <button type="submit" class="btn w-100 fw-bold" style="background-color: var(--primary-color); color: white;">Request Consultation</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Core Modules Section -->
+<section id="modules" class="modules-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Core Functional WMS Modules</h2>
+            <p class="text-muted">Designed to automate and optimize every step of warehouse operations.</p>
+        </div>
+        <div class="row g-4">
+            <!-- Module 1: Inventory & Stock Control -->
+            <div class="col-md-4">
+                <div class="module-card">
+                    <div class="module-icon"><i class="fas fa-warehouse"></i></div>
+                    <h5 class="fw-bold text-primary">Inventory & Stock Control</h5>
+                    <p>Accurate stock management with **Batch, Lot, Serial number, Expiry dates**, and FIFO/LIFO rules.</p>
+                </div>
+            </div>
+            <!-- Module 2: Inbound Operations -->
+            <div class="col-md-4">
+                <div class="module-card">
+                    <div class="module-icon"><i class="fas fa-boxes"></i></div>
+                    <h5 class="fw-bold text-primary">Inbound Operations (Receiving & Putaway)</h5>
+                    <p>**Advanced Shipment Notifications (ASN)**, swift receiving, and location-based Guided Putaway.</p>
+                </div>
+            </div>
+            <!-- Module 3: Outbound Operations -->
+            <div class="col-md-4">
+                <div class="module-card">
+                    <div class="module-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <h5 class="fw-bold text-primary">Outbound Operations (Picking & Shipping)</h5>
+                    <p>**Waveless Picking (Batch/Zone)**, Picking Route Optimization, and Shipping Document Automation.</p>
+                </div>
+            </div>
+            <!-- Module 4: Space & Location Management -->
+            <div class="col-md-4">
+                <div class="module-card">
+                    <div class="module-icon"><i class="fas fa-thumbtack"></i></div>
+                    <h5 class="fw-bold text-primary">Space & Location Management</h5>
+                    <p>**Warehouse Layout Visualization**, Bin/Pallet Tracking, and Dynamic Storage Assignment.</p>
+                </div>
+            </div>
+            <!-- Module 5: Workforce & Tasking -->
+            <div class="col-md-4">
+                <div class="module-card">
+                    <div class="module-icon"><i class="fas fa-users-cog"></i></div>
+                    <h5 class="fw-bold text-primary">Workforce & Task Management</h5>
+                    <p>Assign priority-based tasks to workers, track progress, and **monitor labor performance**.</p>
+                </div>
+            </div>
+            <!-- Module 6: Auditing & Cycle Counting -->
+            <div class="col-md-4">
+                <div class="module-card">
+                    <div class="module-icon"><i class="fas fa-sync-alt"></i></div>
+                    <h5 class="fw-bold text-primary">Cycle Counting & Auditing</h5>
+                    <p>**Automatically schedule cycle counting**, track inventory variance, and maintain a complete audit trail.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Detailed Features Section (Advanced Functionality) -->
+<section id="features" class="detailed-features">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">ELSA WMS Advanced Functionality</h2>
+            <p class="text-muted">Features that transform your warehouse from traditional to smart.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <h3 class="fw-bold text-primary mb-4">Automation & Integration</h3>
+
+                <div class="feature-box d-flex align-items-start">
+                    <i class="fas fa-microchip"></i>
+                    <div>
+                        <h5>Handheld Device and RF Support</h5>
+                        <p class="text-muted mb-0">Seamless integration with tablets, PDAs, and **RF scanners** for picking and counting.</p>
+                    </div>
+                </div>
+
+                <div class="feature-box d-flex align-items-start">
+                    <i class="fas fa-handshake"></i>
+                    <div>
+                        <h5>ERP/TMS Integration</h5>
+                        <p class="text-muted mb-0">Seamless data synchronization via APIs with **SAP, Tally**, and other major ERP/TMS systems.</p>
+                    </div>
+                </div>
+
+                <div class="feature-box d-flex align-items-start">
+                    <i class="fas fa-robot"></i>
+                    <div>
+                        <h5>Order Processing Automation</h5>
+                        <p class="text-muted mb-0">Automatically trigger tasks based on rules, from order release to final shipping.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h3 class="fw-bold text-primary mb-4">Performance Monitoring (MIS)</h3>
+
+                <div class="feature-box d-flex align-items-start">
+                    <i class="fas fa-chart-bar"></i>
+                    <div>
+                        <h5>Key Performance Indicators (KPIs) Dashboard</h5>
+                        <p class="text-muted mb-0">Track crucial metrics like **Dock-to-Stock time, Order Fill Rate, and Inventory Accuracy**.</p>
+                    </div>
+                </div>
+
+                <div class="feature-box d-flex align-items-start">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <h5>Proactive Alert System</h5>
+                        <p class="text-muted mb-0">Receive immediate, actionable alerts for low-stock, near-expiry dates, or picking errors.</p>
+                    </div>
+                </div>
+
+                <div class="feature-box d-flex align-items-start">
+                    <i class="fas fa-clipboard-list"></i>
+                    <div>
+                        <h5>Customizable Reporting</h5>
+                        <p class="text-muted mb-0">Generate detailed, customizable MIS reports on inventory, labor, and warehouse efficiency.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WMS Benefits Section -->
+<section id="benefits" class="py-5 bg-secondary">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Key Business Benefits of ELSA WMS</h2>
+            <p class="text-muted">Transform your warehouse into an efficient, cost-saving center.</p>
+        </div>
+        <div class="row g-4 text-center">
+            <!-- Benefit 1: Accuracy -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="p-4 bg-white rounded shadow-sm h-100 border border-success">
+                    <i class="fas fa-search-dollar fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">99.9% Inventory Accuracy</h5>
+                    <p class="text-muted">Increase inventory accuracy by reducing manual errors and using automated counting.</p>
+                </div>
+            </div>
+            <!-- Benefit 2: Speed -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="p-4 bg-white rounded shadow-sm h-100 border border-success">
+                    <i class="fas fa-bolt fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">25% Faster Order Fulfillment</h5>
+                    <p class="text-muted">Reduce cycle time through optimized picking and guided putaway routes.</p>
+                </div>
+            </div>
+            <!-- Benefit 3: Cost -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="p-4 bg-white rounded shadow-sm h-100 border border-success">
+                    <i class="fas fa-hand-holding-usd fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Reduced Warehousing Costs</h5>
+                    <p class="text-muted">Control operational expenses with better space utilization and labor efficiency.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="cta-section text-center">
+    <div class="container">
+        <h2 class="fw-bold">Transform Your Warehouse into a Smart Center Today.</h2>
+        <p class="mb-4">Our experts can help customize the solution based on your specific needs.</p>
+        <a href="#contact" class="btn btn-light btn-lg fw-bold me-3"><i class="fas fa-calendar-alt"></i> Register for a Free Demo</a>
+        <a href="tel:+919811808342" class="btn btn-outline-dark btn-lg fw-bold"><i class="fas fa-phone"></i> Call Sales: +91-8077586754</a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-warning fw-bold">ELSA Logistics Solutions</h5>
+                <p class="text-light">Powering your supply chain with Advanced WMS.</p>
+            </div>
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="fw-bold">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#modules">WMS Modules</a></li>
+                    <li><a href="#features">Advanced Features</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="fw-bold">Contact Us</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone-alt me-2"></i> +91-8077586754</li>
+                    <li><i class="fas fa-envelope me-2"></i> info@elsa.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i> Varanasi, UP, India</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="mt-4 mb-3" style="border-color: #495057;">
+        <div class="text-center">
+            <p class="mb-0 text-muted">© 2025 ELSA Private Limited. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

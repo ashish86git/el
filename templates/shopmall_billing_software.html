@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shop & Mall Billing Software | ELSA Private Limited</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd; /* Blue */
+            --secondary-color: #f8f9fa; /* Light Gray */
+            --text-dark: #212529;
+            --text-light: #6c757d;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+            color: var(--text-dark);
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            background-color: #fff;
+        }
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        .nav-link {
+            color: var(--text-dark) !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+        .btn-call-now {
+            background-color: #ffc107; /* Warning color */
+            color: var(--text-dark);
+            font-weight: 600;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            background: linear-gradient(90deg, #e3f2fd 0%, #ffffff 100%);
+            padding: 80px 0;
+        }
+        .hero-title {
+            font-weight: 800;
+            color: var(--primary-color);
+            font-size: 3rem;
+        }
+        .hero-subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        .feature-list i {
+            color: #198754; /* Green checkmark */
+            margin-right: 10px;
+        }
+        .contact-form-card {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        /* --- Key Modules Section --- */
+        .key-modules-section {
+            padding: 60px 0;
+            background-color: var(--secondary-color);
+        }
+        .module-card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s;
+            background-color: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            height: 100%; /* Ensure uniform height */
+        }
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .module-icon {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* --- Detailed Features Section --- */
+        .detailed-features {
+            padding: 60px 0;
+        }
+        .accordion-item {
+            border-radius: 8px !important;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .accordion-button {
+            font-weight: 600;
+            color: var(--primary-color);
+            background-color: #fff;
+            border-radius: 8px !important;
+        }
+        .accordion-button:not(.collapsed) {
+            color: #fff;
+            background-color: var(--primary-color);
+            box-shadow: none;
+        }
+        .feature-item i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        .feature-item {
+            padding: 8px 0;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--text-dark);
+            color: #fff;
+            padding: 40px 0;
+        }
+        footer a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">ELSA Private Limited</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                <li class="nav-item"><a class="nav-link" href="#modules">Key Modules</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#benefits">Why ELSA?</a></li>
+                <li class="nav-item">
+                    <a href="tel:+919811808342" class="btn btn-call-now ms-lg-3"><i class="fas fa-phone-alt"></i> Call for Demo</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="hero-title">Shop & Mall <br>Billing Software</h1>
+                <p class="hero-subtitle">The ultimate POS and Inventory Management Solution for all retail and shopping center operations. Streamline billing, track stock, and boost your sales.</p>
+
+                <div class="row mb-4 feature-list">
+                    <div class="col-md-6">
+                        <p><i class="fas fa-check-circle"></i> GST Ready & Compliant</p>
+                        <p><i class="fas fa-check-circle"></i> Integrated POS Terminal</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><i class="fas fa-check-circle"></i> Advanced Inventory Tracking</p>
+                        <p><i class="fas fa-check-circle"></i> Multi-Outlet/Store Support</p>
+                    </div>
+                </div>
+
+                <a href="#features" class="btn btn-primary btn-lg me-3">Explore Features</a>
+                <a href="#contact" class="btn btn-outline-primary btn-lg">Request Pricing</a>
+            </div>
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="contact-form-card">
+                    <h4 class="text-center mb-4 fw-bold">Get a Free Consultation</h4>
+                    <form>
+                        <div class="mb-3"><input type="text" class="form-control" placeholder="Full Name" required></div>
+                        <div class="mb-3"><input type="email" class="form-control" placeholder="Business Email" required></div>
+                        <div class="mb-3"><input type="tel" class="form-control" placeholder="Mobile Number" required></div>
+                        <div class="mb-3">
+                            <select class="form-select">
+                                <option selected>Select Your Business Type</option>
+                                <option>Retail Store/Boutique</option>
+                                <option>Supermarket/Mall</option>
+                                <option>Restaurant/Café</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3"><textarea class="form-control" rows="3" placeholder="Your Requirements"></textarea></div>
+                        <button type="submit" class="btn btn-warning w-100 fw-bold">BOOK A DEMO NOW</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="modules" class="key-modules-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Key Modules & Solutions</h2>
+            <p class="text-muted">Comprehensive tools designed for modern retail environments.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card module-card p-4">
+                    <div class="module-icon"><i class="fas fa-cash-register"></i></div>
+                    <h5 class="fw-bold">Point of Sale (POS)</h5>
+                    <p>Fast, reliable billing for high-traffic environments. Supports touch screen, barcode scanner, and all payment methods.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card module-card p-4">
+                    <div class="module-icon"><i class="fas fa-boxes"></i></div>
+                    <h5 class="fw-bold">Inventory Management</h5>
+                    <p>Real-time stock tracking, low stock alerts, auto-GRN generation, and multi-warehouse/outlet inventory control.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card module-card p-4">
+                    <div class="module-icon"><i class="fas fa-users-cog"></i></div>
+                    <h5 class="fw-bold">Customer & Loyalty</h5>
+                    <p>Manage customer profiles, run loyalty programs, track purchase history, and send automated SMS/Email offers.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card module-card p-4">
+                    <div class="module-icon"><i class="fas fa-calculator"></i></div>
+                    <h5 class="fw-bold">Accounting & GST</h5>
+                    <p>Built-in accounting features, GST compliance, automated tax calculations, and export for Tally/other systems.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card module-card p-4">
+                    <div class="module-icon"><i class="fas fa-chart-bar"></i></div>
+                    <h5 class="fw-bold">MIS & Analytics</h5>
+                    <p>In-depth sales reports, category performance, staff efficiency, and profit/loss statements for smarter decision-making.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card module-card p-4">
+                    <div class="module-icon"><i class="fas fa-globe"></i></div>
+                    <h5 class="fw-bold">E-commerce Integration</h5>
+                    <p>Seamlessly integrate with your online store/e-commerce platforms to keep online and physical inventory synchronized.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="detailed-features">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Detailed Product Features</h2>
+            <p class="text-muted">What makes ELSA Billing Software the best choice for your retail business.</p>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://img.freepik.com/free-vector/hand-drawn-business-analysis-illustration_23-2149303531.jpg" class="img-fluid rounded shadow" alt="Detailed Features">
+            </div>
+            <div class="col-lg-6">
+                <div class="accordion" id="featuresAccordion">
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                                <i class="fas fa-file-invoice"></i> Advanced Billing & POS Functions
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Fast Keyboard/Barcode Billing</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Multiple Payment Modes (UPI, Card, Cash)</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Sales Return & Exchange Management</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Hold/Retrieve Bill Functionality</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                                <i class="fas fa-truck"></i> Procurement and Stock Management
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Purchase Order (PO) Management</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Goods Receipt Note (GRN)</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> FIFO/LIFO Costing Methods</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Physical Stock Audit & Tally</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                                <i class="fas fa-line-chart"></i> Business Intelligence & Reporting
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Daily Sales & Cashier Report</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Slow-Moving/Fast-Moving Product Analysis</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Vendor & Profitability Reports</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Customizable Report Generation</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour">
+                                <i class="fas fa-lock"></i> Security and User Management
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#featuresAccordion">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Role-Based Access Control (RBAC)</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Cash Drawer Management</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Audit Logs for all Transactions</div></div>
+                                    <div class="col-md-6"><div class="feature-item"><i class="fas fa-angle-right"></i> Secure Cloud-Based Backup</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="benefits" class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Why ELSA Billing Software?</h2>
+            <p class="text-muted">More than just billing - it's a complete business management platform.</p>
+        </div>
+        <div class="row g-4 text-center">
+            <div class="col-lg-3 col-sm-6">
+                <div class="p-4 bg-white rounded shadow-sm h-100">
+                    <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">24/7 Support</h5>
+                    <p class="text-muted">Dedicated technical support via call, chat, and email for zero downtime.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="p-4 bg-white rounded shadow-sm h-100">
+                    <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Data Security</h5>
+                    <p class="text-muted">Cloud-based, encrypted, and backed up data to keep your business safe.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="p-4 bg-white rounded shadow-sm h-100">
+                    <i class="fas fa-mobile-alt fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Mobile Compatibility</h5>
+                    <p class="text-muted">Access reports and track sales from your phone or tablet on the go.</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="p-4 bg-white rounded shadow-sm h-100">
+                    <i class="fas fa-dollar-sign fa-3x text-primary mb-3"></i>
+                    <h5 class="fw-bold">Cost Effective</h5>
+                    <p class="text-muted">Flexible pricing plans that grow with your business without heavy upfront costs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-primary text-white text-center">
+    <div class="container">
+        <h2 class="fw-bold">Ready to Revolutionize Your Retail Operations?</h2>
+        <p class="mb-4">Get a personalized demo to see how ELSA can transform your shop or mall's efficiency.</p>
+        <a href="#contact" class="btn btn-warning btn-lg fw-bold me-3"><i class="fas fa-calendar-check"></i> Book a Demo</a>
+        <a href="tel:+919811808342" class="btn btn-outline-light btn-lg"><i class="fas fa-phone"></i> Call Sales: +91-981-180-8342</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="text-warning fw-bold">ELSA Private Limited</h5>
+                <p class="text-light">Providing smart, reliable IT solutions for businesses across India.</p>
+            </div>
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h5 class="fw-bold">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#modules">Key Modules</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#benefits">Why ELSA?</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <h5 class="fw-bold">Contact Info</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-phone-alt me-2"></i> +91-981-180-8342</li>
+                    <li><i class="fas fa-envelope me-2"></i> sales@elsa.com</li>
+                    <li><i class="fas fa-map-marker-alt me-2"></i> Corporate Address, City, India</li>
+                </ul>
+            </div>
+        </div>
+        <hr class="mt-4 mb-3">
+        <div class="text-center">
+            <p class="mb-0 text-muted">© 2025 ELSA Private Limited. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

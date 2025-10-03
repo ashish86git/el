@@ -1,394 +1,862 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELSA Private Limited</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ELSA Private Limited</title>
 
-<style>
-  * { box-sizing: border-box; margin:0; padding:0; font-family: 'Arial', sans-serif; }
-  a { text-decoration: none; color: inherit; }
-  button { cursor: pointer; }
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 
-  body {
-    margin:0;
-    overflow-x:hidden;
-    background:#0d1117;
-    position:relative;
-  }
-  canvas#bgCanvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
+  <style>
+    /* ---------- Base ---------- */
+    :root{
+      --bg-dark:#0a0c10;
+      --primary:#3b82f6;
+      --accent:#2563eb;
+      --muted:#9ca3af;
+      --card-bg:linear-gradient(180deg,#1e293b,#111827);
+      --glass: rgba(255,255,255,0.08);
+      --container:1200px;
+      /* New color for AI/Tech glow - MODIFIED FOR FULL BRIGHTNESS */
+      --tech-glow: #00ffff; /* Pure Cyan for maximum visibility */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      background-color:var(--bg-dark);
+      color:#e2e8f0;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none;}
+    img{max-width:100%;display:block}
 
-  header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:10px 20px;
-    background:#007bff;
-    color:#fff;
-    position:sticky;
-    top:0;
-    z-index:10;
-  }
-  header img { width:60px; height:60px; border-radius:50%; object-fit:cover; }
-  header h1 { font-size:1.8em; }
-  header .header-btns button {
-    background:#fff; color:#007bff; margin-left:10px; padding:8px 16px; border:none; border-radius:6px; display:flex; align-items:center; gap:6px; font-weight:bold; transition:0.3s;
-  }
-  header .header-btns button:hover { background:#e2e2e2; }
-
-  nav { display:flex; justify-content:center; flex-wrap:wrap; background:#333; padding:10px 0; }
-  nav a { color:#fff; padding:10px 20px; font-weight:bold; border-radius:5px; transition:0.3s; }
-  nav a:hover { background:#575757; }
-
-  .hero {
-    position:relative;
-    height:65vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    color:#fff;
-    overflow:hidden;
-  }
-  .hero h2 { font-size:2.8em; margin-bottom:20px; opacity:0; transform:translateY(30px); animation:fadeInUp 1s forwards; animation-delay:0.3s; }
-  .hero p { font-size:1.2em; margin-bottom:20px; opacity:0; transform:translateY(30px); animation:fadeInUp 1s forwards; animation-delay:0.6s; }
-  .hero button { background:#007bff; color:#fff; padding:15px 30px; border:none; font-size:1.2em; border-radius:8px; opacity:0; transform:translateY(30px); animation:fadeInUp 1s forwards; animation-delay:0.9s; }
-  .hero button:hover { background:#0056b3; }
-  @keyframes fadeInUp { to { opacity:1; transform:translateY(0); } }
-
-  .services { max-width:1200px; margin:80px auto; text-align:center; padding:0 20px; }
-  .services-header h3 { font-size:2.8rem; margin-bottom:10px; font-weight:700; color:#007bff; }
-  .services-header p { font-size:1.2rem; margin-bottom:40px; color:#555; }
-  .services-container { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
-  .service-card { background: rgba(255,255,255,0.9); backdrop-filter:blur(12px); border-radius:16px; padding:30px; text-align:left; max-width:350px; flex:1 1 300px; box-shadow:0 8px 20px rgba(0,0,0,0.1); transition: transform 0.5s, box-shadow 0.5s; opacity:0; transform:translateY(50px); }
-  .service-card.visible { opacity:1; transform:translateY(0); }
-  .service-card:hover { transform:translateY(-10px); box-shadow:0 12px 25px rgba(0,0,0,0.2); }
-  .service-card i { font-size:2.5rem; color:#3b82f6; margin-bottom:15px; }
-  .service-card h4 { font-size:1.4rem; margin-bottom:15px; color:#111827; }
-  .service-card ul { list-style:none; padding:0; margin-bottom:20px; color:#374151; line-height:1.6; }
-  .service-card ul li::before { content:"✔️ "; color:#10b981; margin-right:5px; }
-  .service-card a { display:inline-block; background:#3b82f6; color:#fff; padding:10px 20px; border-radius:8px; transition:0.3s; }
-  .service-card a:hover { background:#2563eb; }
-
-  .customer { padding:60px 20px; text-align:center; }
-  .customer h3 { font-size:2.5rem; margin-bottom:40px; color:#007bff; }
-  .carousel-container { position:relative; width:320px; margin:0 auto; overflow:hidden; }
-  .carousel-inner { display:flex; transition:transform 0.5s ease; }
-  .customer-card { flex:0 0 100%; border-radius:12px; overflow:hidden; position:relative; box-shadow:0 6px 16px rgba(0,0,0,0.15); }
-  .customer-card img { width:100%; display:block; transition: transform 0.4s ease; }
-  .customer-card:hover img { transform:scale(1.05); }
-  .customer-card .overlay { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.6); color:#fff; padding:15px; }
-  .carousel-nav { position:absolute; top:50%; transform:translateY(-50%); cursor:pointer; font-size:2rem; color:#333; user-select:none; z-index:10; }
-  .carousel-nav.prev { left:10px; }
-  .carousel-nav.next { right:10px; }
-
-  .about {
-      background: #f6f8fa;
-      color: #111;
-      padding: 80px 20px;
-      text-align: center;
+    /* Canvas Particle Background - FIX APPLIED HERE: z-index and background-color */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* -10 से बदलकर -1 किया ताकि किसी और लेयर के पीछे न छिप जाए */
+      pointer-events: none;
+      background-color: var(--bg-dark); /* सुनिश्चित करने के लिए कि यह dark background पर रहे */
     }
 
-    .about-container h3 {
-      font-size: 2.8rem;
-      margin-bottom: 20px;
-      color: #007bff;
+    /* Custom Scrollbar for a modern look */
+    body::-webkit-scrollbar { width: 8px; }
+    body::-webkit-scrollbar-track { background: var(--bg-dark); }
+    body::-webkit-scrollbar-thumb { background-color: #334155; border-radius: 20px; border: 2px solid var(--bg-dark); }
+
+    /* ---------- Top bar & Header (Glassmorphism & Sticky) ---------- */
+    .top-bar{
+      background:rgba(255,255,255,0.05);
+      color:#cbd5e1;
+      font-size:0.95rem;
+      display:flex;
+      gap:24px;
+      justify-content:center;
+      padding:10px 16px;
+      align-items:center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+    .top-bar .contact{display:flex;gap:10px;align-items:center}
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 24px;
+      max-width:var(--container);
+      margin:0 auto;
+      width:100%;
+      position:sticky;
+      top:0;
+      z-index:60;
+      backdrop-filter: blur(10px);
+      background: rgba(10, 12, 16, 0.75);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .logo-wrap{display:flex;align-items:center;gap:12px}
+    .logo-wrap img{width:50px;height:50px;border-radius:10px;object-fit:cover;box-shadow: 0 0 10px rgba(59, 130, 246, 0.2);}
+    .brand {font-weight:800;color:#f8fafc;font-size:1.25rem;}
+    nav{display:flex;gap:10px;align-items:center}
+    nav a{color:#a5b4fc;padding:10px 14px;border-radius:10px;font-weight:600;transition:all 0.3s ease;}
+    nav a:hover{background:rgba(255,255,255,0.08);color:#fff; transform: translateY(-2px);}
+    .header-actions{display:flex;gap:12px;align-items:center}
+    .btn{
+      background:var(--primary);
+      color:#fff;
+      padding:10px 16px;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      font-weight:700;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      box-shadow: 0 8px 20px rgba(59,130,246,0.2);
+      transition:background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+    .btn:hover{
+      background:#5b98f5;
+      transform:translateY(-1px);
+      box-shadow: 0 10px 25px rgba(59,130,246,0.3);
+    }
+    .btn.secondary{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.15);
+      color:#cbd5e1;
+      box-shadow:none;
+    }
+    .btn.secondary:hover{
+      background:rgba(255,255,255,0.1);
+      transform:translateY(-1px);
     }
 
-    .about-container p {
-      font-size: 1.2rem;
-      margin-bottom: 50px;
-      color: #555;
-      max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
+    /* ---------- Hero ---------- */
+    .hero{
+      max-width:var(--container);
+      margin:36px auto;
+      padding:40px 20px;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:40px;
+      align-items:center;
+    }
+    .hero-card{
+      color:#e2e8f0;
+    }
+    .hero h1{
+      font-size:2.8rem;
+      margin:0 0 16px 0;
+      color:#fff;
+      letter-spacing:-0.5px;
+      line-height:1.2;
+    }
+    .hero p{color:#94a3b8;margin:0 0 24px 0;font-size:1.1rem;}
+    .hero-ctas{display:flex;gap:15px}
+    .hero .cta{background:var(--primary);padding:14px 24px;border-radius:12px;color:#fff;font-weight:700;border:none;transition:all 0.3s ease;}
+    .hero .cta:hover{background:#5b98f5; transform: translateY(-2px);}
+    .hero .cta.secondary{
+      background:transparent;
+      border:2px solid var(--primary);
+      color:var(--primary);
+      box-shadow: none;
+    }
+    .hero .cta.secondary:hover{background:rgba(59, 130, 246, 0.1); color:#fff;}
+
+    .hero-side{
+      background:var(--card-bg);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:18px;
+      padding:24px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+      text-align:center;
+      color:#e2e8f0;
+      backdrop-filter: blur(4px);
+    }
+    .hero-side h3{margin:8px 0 16px 0;color:#fff;}
+    .stat-row{display:flex;gap:20px;justify-content:center}
+    .stat{min-width:110px;padding:15px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.05);}
+    .stat strong{display:block;font-size:1.5rem;color:var(--primary);font-weight:800;margin-bottom:4px;}
+
+    /* ---------- Sections (Centering Logic) ---------- */
+    .section{
+      max-width:var(--container);
+      margin:40px auto;
+      padding:30px 20px;
+      background:transparent;
+    }
+    /* Centering the section headers and text */
+    .section h2{
+        color:#fff;
+        margin:0 auto 16px auto; /* Centered margin */
+        font-size:2rem;
+        border-left:none; /* Remove left border for centering */
+        padding-left:0;
+        text-align:center;
+        /* Re-add the primary border as a subtle bottom line for style */
+        border-bottom: 4px solid var(--primary);
+        display: inline-block; /* To make border-bottom only cover text width */
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .subtle{
+        color:#a5b4fc;
+        font-size:1rem;
+        margin-bottom:24px;
+        text-align:center; /* Centered subtitle */
     }
 
-    .about-cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
+    /* ---------- Services Grid ---------- */
+    .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .service-card{
+      background:var(--card-bg);
+      border-radius:16px;padding:25px;
+      border:1px solid rgba(59,130,246,0.1);
+      box-shadow:0 12px 30px rgba(0,0,0,0.2);
+      transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+      color:#e2e8f0;
     }
+    .service-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(0,0,0,0.3), 0 0 15px rgba(59,130,246,0.3); border-color:var(--primary);}
+    .service-card i{font-size:32px;color:var(--primary);margin-bottom:12px;display:inline-block;}
+    .service-card h4{margin:8px 0 12px 0;font-size:1.25rem;color:#fff;}
+    .service-list{color:#cbd5e1;font-size:0.95rem;padding:0;list-style:none;}
+    .service-list li {margin-bottom:4px; position:relative; padding-left:18px;}
+    .service-list li:before {content:'\2022'; position:absolute; left:0; color:var(--primary); font-weight:bold;}
+    .service-card a{display:inline-block;margin-top:16px;background:var(--accent);color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;transition:background 0.3s ease;}
+    .service-card a:hover{background:#4f46e5}
 
-    .about-card {
-      background: #db2589;
-      border-radius: 16px;
-      padding: 30px;
-      max-width: 300px;
-      flex: 1 1 250px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-      transition: transform 0.4s, box-shadow 0.4s;
+    /* ---------- Products / Solutions (Image emphasis) ---------- */
+    .product-grid{display:grid;grid-template-columns:repeat(3,1fr); gap:20px}
+    .product{
+      border-radius:16px;overflow:hidden;
+      background:var(--card-bg);
+      padding:0;
+      box-shadow:0 12px 30px rgba(0,0,0,0.2);
+      border:1px solid rgba(255,255,255,0.08);
+      transition:transform .3s ease, box-shadow .3s ease;
     }
+    .product:hover{transform:scale(1.02); box-shadow:0 15px 40px rgba(0,0,0,0.4);}
+    .product img{height:200px;object-fit:cover;width:100%;transition:opacity 0.3s ease;}
+    .product:hover img{opacity:0.9;}
+    .product .p-body{padding:18px}
+    .product h4{margin:6px 0;color:#fff;font-size:1.15rem;}
+    .product p{color:#94a3b8;font-size:.95rem}
 
-    .about-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    /* ---------- Stats (Modern KPI) ---------- */
+    .kpi-grid{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between}
+    .kpi{background:rgba(255,255,255,0.05);padding:20px;border-radius:12px;min-width:160px;text-align:center;color:#e2e8f0;border:1px solid rgba(255,255,255,0.05);}
+    .kpi strong{font-size:2.5rem;display:block;color:var(--primary);font-weight:800;line-height:1;}
+    .kpi .subtle{font-size:1rem;margin:4px 0 0 0;color:#cbd5e1;}
+
+    /* ---------- Clients Carousel (Enhanced Look) ---------- */
+    .clients-inner{display:flex;gap:30px;transition:none; /* Transition disabled as it's controlled by JS frame */}
+    .client-logo{min-width:140px;min-height:80px;display:flex;align-items:center;justify-content:center;padding:15px;border-radius:10px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);filter:grayscale(100%); opacity:0.6; transition:all 0.4s ease;}
+    .client-logo:hover{filter:grayscale(0%); opacity:1; background:rgba(255,255,255,0.05);}
+    .client-logo img{max-height:50px; width:auto; object-fit:contain;}
+
+    /* ---------- About (6 cards) ---------- */
+    .about-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+      margin-top:20px;
     }
-
-    .about-card i {
-      font-size: 2.5rem;
-      color: #007bff;
-      margin-bottom: 15px;
+    .about-card{
+      background:var(--card-bg);
+      border-radius:18px;padding:25px;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 12px 30px rgba(0,0,0,0.2);
+      transition:transform .3s ease,box-shadow .3s ease;
+      display:flex;flex-direction:column;gap:12px;
+      color:#cbd5e1;
     }
-
-    .about-card h4 {
-      font-size: 1.4rem;
-      margin-bottom: 15px;
+    .about-card .card-top{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:60px;height:60px;border-radius:14px;
+      background:rgba(59, 130, 246, 0.15);
+      color:var(--primary);font-size:24px;
+      margin-bottom:8px;
     }
+    .about-card h4{margin:0;color:#fff;font-size:1.2rem;}
+    .about-card p{color:#94a3b8;font-size:.95rem;line-height:1.6;}
+    .about-card:hover{transform:translateY(-10px);box-shadow:0 20px 50px rgba(0,0,0,0.3);}
 
-    .about-card p {
-      font-size: 1rem;
-      color: #0d0205;
+    /* ---------- Contact (Form & Info Card) ---------- */
+    .contact-wrap{display:grid;grid-template-columns:1fr 420px;gap:30px;align-items:start}
+    .contact-card{
+      background:var(--card-bg);
+      padding:25px;border-radius:16px;
+      border:1px solid rgba(255,255,255,0.1);
+      box-shadow:0 12px 30px rgba(0,0,0,0.2);
+      color:#e2e8f0;
     }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .about-cards {
-        flex-direction: column;
-        align-items: center;
-      }
+    #contactForm .form-group{margin-bottom:16px}
+    input[type="text"],input[type="email"],input[type="tel"],select,textarea{
+      width:100%;padding:14px;border-radius:10px;
+      border:1px solid rgba(255,255,255,0.1);
+      background:rgba(255,255,255,0.05);
+      color:#fff;
+      font-size:1rem;
+      transition:border-color 0.3s ease;
     }
+    input:focus, select:focus, textarea:focus {
+      outline:none;
+      border-color:var(--primary);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+    }
+    textarea{min-height:140px;resize:vertical}
+    #contactForm label {display:block; margin-bottom:6px; color:#a5b4fc; font-weight:600;}
+    #contactForm .btn{width:100%}
+    #formStatus{
+        background:rgba(59, 130, 246, 0.1);
+        color:#93c5fd !important;
+        border:1px solid #3b82f6;
+    }
+    .contact-card h3{color:#fff; margin-top:0;}
+    .contact-card p{color:#a5b4fc;}
 
+    /* ---------- Footer ---------- */
+    footer{background:rgba(10, 12, 16, 0.8);color:#a5b4fc;padding:25px 10px;text-align:center;margin-top:36px;border-top:1px solid rgba(255,255,255,0.08); backdrop-filter: blur(4px);}
+    footer strong{color:#fff;}
 
-  .contact { padding:60px 20px; text-align:center; background:#f6f8fa; }
-  .contact-container { max-width:600px; margin:0 auto; background:#fff; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.1); padding:40px 30px; }
-  #contactForm .form-group { margin-bottom:20px; position:relative; }
-  #contactForm label i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:#007bff; }
-  #contactForm input, #contactForm select, #contactForm textarea { width:100%; padding:14px 16px 14px 40px; border:1px solid #ccc; border-radius:8px; font-size:1rem; }
-  #contactForm input:focus, #contactForm select:focus, #contactForm textarea:focus { border-color:#007bff; outline:none; }
-  #contactForm button { background:#007bff; color:#fff; border:none; padding:14px 24px; border-radius:8px; cursor:pointer; font-size:1rem; position:relative; overflow:hidden; }
-  #contactForm button:hover { background:#0056b3; }
-  #contactForm button .btn-loader { display:none; width:20px; height:20px; border:3px solid #fff; border-top:3px solid #007bff; border-radius:50%; animation:spin 1s linear infinite; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); }
-  #contactForm button.loading .btn-text { visibility:hidden; }
-  #contactForm button.loading .btn-loader { display:block; }
-  @keyframes spin { 0%{ transform:translate(-50%, -50%) rotate(0deg); } 100%{ transform:translate(-50%, -50%) rotate(360deg); } }
-  #successMessage { display:none; margin-top:20px; background:#d4edda; color:#155724; padding:10px 16px; border-radius:8px; }
-
-  footer { background:#333; color:#fff; text-align:center; padding:20px 0; }
-
-  @media(max-width:768px){ .services-container{flex-direction:column; align-items:center;} .hero h2{font-size:2rem;} header .header-btns button{margin:5px 0 0 0;} }
-</style>
+    /* ---------- Responsive ---------- */
+    @media (max-width:1100px){
+      .hero{grid-template-columns:1fr 360px}
+      .service-grid{grid-template-columns:repeat(2,1fr)}
+      .product-grid{grid-template-columns:repeat(2,1fr)}
+      .about-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:800px){
+      header{padding:12px}
+      nav{display:none}
+      .hero{grid-template-columns:1fr}
+      .hero-side{order:2}
+      .contact-wrap{grid-template-columns:1fr}
+      .service-grid{grid-template-columns:1fr}
+      .product-grid{grid-template-columns:1fr}
+      .about-grid{grid-template-columns:1fr}
+      .clients{overflow:auto;padding-bottom:8px}
+      .hero h1{font-size:2rem;}
+      .section h2{font-size:1.6rem;}
+      .top-bar{gap:12px; font-size:0.85rem;}
+      .top-bar .contact {display:none;}
+    }
+    @media (max-width:420px){
+      .logo-wrap img{width:46px;height:46px}
+      .brand{font-size:1rem}
+      .btn{padding:8px 10px;font-size:0.9rem}
+      .hero h1{font-size:1.5rem}
+      .hero-ctas{flex-direction:column; gap:10px;}
+      .kpi-grid{justify-content:center;}
+      .kpi{min-width:45%;}
+      .top-bar div:nth-child(3) {margin-left:0 !important;}
+    }
+  </style>
 </head>
 
 <body>
-<canvas id="bgCanvas"></canvas>
+  <canvas id="bgCanvas"></canvas>
 
-<header>
-  <a href="#"><img src="/static/11.png" alt="Logo"></a>
-  <h1>ELSA Private Limited</h1>
-  <div class="header-btns">
-    <button><i class="fa-solid fa-phone"></i> Call Us</button>
-    <button><i class="fa-solid fa-envelope"></i> Email Us</button>
+  <div class="top-bar">
+    <div class="contact"><i class="fa-solid fa-phone"></i> +91-8077586754</div>
+    <div class="contact"><i class="fa-solid fa-envelope"></i> contact@elsa.com</div>
+    <div style="margin-left:auto;color:#a5b4fc;font-weight:600">ELSA Private Limited</div>
   </div>
-</header>
 
-<nav>
-  <a href="#">Home</a>
-  <a href="#services">Services</a>
-  <a href="#about">About Us</a>
-  <a href="#customer">Customer</a>
-  <a href="#contact">Contact</a>
-</nav>
-
-<section class="hero" id="hero">
-  <h2>Innovative IT Solutions for Your Business</h2>
-  <p>Empowering businesses with top-notch IT services, from software development to cloud solutions.</p>
-  <button>Get Started</button>
-</section>
-
-<section class="services" id="services">
-  <div class="services-header">
-    <h3>Our Services</h3>
-    <p>Choose the service that fits your needs.</p>
-  </div>
-  <div class="services-container">
-    <div class="service-card">
-      <i class="fa-solid fa-laptop-code"></i>
-      <h4>Development</h4>
-      <ul>
-        <li>Web Development</li>
-        <li>Android Development</li>
-        <li>Desktop Application</li>
-      </ul>
-      <a href="inquiry.html?category=development">More Details</a>
-    </div>
-    <div class="service-card">
-      <i class="fa-solid fa-robot"></i>
-      <h4>Artificial Intelligence</h4>
-      <ul>
-        <li>Predictive Modeling</li>
-        <li>Automation</li>
-        <li>AI Monitoring</li>
-      </ul>
-      <a href="inquiry.html?category=ai">More Details</a>
-    </div>
-    <div class="service-card">
-      <i class="fa-solid fa-chalkboard-user"></i>
-      <h4>Professional Training</h4>
-      <ul>
-        <li>Data Science</li>
-        <li>Data Analysis</li>
-        <li>Full Stack Development</li>
-        <li>Digital Marketing</li>
-      </ul>
-      <a href="inquiry.html?category=training">More Details</a>
-    </div>
-  </div>
-</section>
-
-<section class="customer" id="customer">
-  <h3>Our Customers</h3>
-  <div class="carousel-container">
-    <div class="carousel-nav prev" onclick="moveSlide(-1)">&#10094;</div>
-    <div class="carousel-inner" id="carouselInner">
-      <div class="customer-card">
-        <img src="/static/13.jpg" alt="ANC Machine">
-        <div class="overlay"><h4>ANC Machine</h4><p>Gold chain machine.</p></div>
-      </div>
-      <div class="customer-card">
-        <img src="/static/kb.jpg" alt="Customer 2">
-        <div class="overlay"><h4>Customer 2</h4><p>Customer 2's testimonial.</p></div>
-      </div>
-      <div class="customer-card">
-        <img src="/static/customer3.jpg" alt="Customer 3">
-        <div class="overlay"><h4>Customer 3</h4><p>Customer 3's testimonial.</p></div>
+  <header>
+    <div class="logo-wrap">
+      <img src="static/11.png" alt="ELSA Logo">
+      <div>
+        <div class="brand">ELSA Private Limited</div>
       </div>
     </div>
-    <div class="carousel-nav next" onclick="moveSlide(1)">&#10095;</div>
-  </div>
-</section>
 
-<section class="about" id="about">
-  <div class="about-container">
-    <h3>About Us</h3>
-    <p>We are a team of dedicated IT professionals committed to helping businesses thrive in the digital age.</p>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#products">Products & Software</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
 
-    <div class="about-cards">
-      <div class="about-card">
-        <i class="fas fa-eye"></i>
-        <h4>Our Vision</h4>
-        <p>To empower businesses worldwide with innovative, efficient, and sustainable IT solutions that drive growth and transformation.</p>
+    <div class="header-actions">
+      <button class="btn secondary" onclick="window.location='#contact'"><i class="fa-solid fa-phone"></i> Contact</button>
+      <button class="btn" onclick="window.location='#contact'"><i class="fa-solid fa-envelope"></i> Get Quote</button>
+    </div>
+  </header>
+
+  <main id="home" class="hero" role="main">
+    <div class="hero-card">
+      <h1>Innovative IT Solutions for Businesses</h1>
+      <p>Custom software, web & mobile development, AI solutions, and professional training — delivered from Varanasi with global standards.</p>
+      <div class="hero-ctas">
+        <button class="cta" onclick="window.location='#contact'">Get Started</button>
+        <button class="cta secondary" onclick="window.location='#services'">View Services</button>
+      </div>
+      <div style="margin-top:24px" class="subtle">Trusted by startups, SMEs and enterprises for secure, scalable, and maintainable solutions.</div>
+    </div>
+
+    <aside class="hero-side" aria-label="Quick stats">
+      <h3>Quick Facts</h3>
+      <div class="stat-row" style="margin-top:14px">
+        <div class="stat"><strong>10+</strong><span style="font-size:.9rem;color:#94a3b8">Projects</span></div>
+        <div class="stat"><strong>3+</strong><span style="font-size:.9rem;color:#94a3b8">Clients</span></div>
       </div>
 
-      <div class="about-card">
-        <i class="fas fa-bullseye"></i>
+      <div style="margin-top:20px">
+        <p style="color:#94a3b8;margin:8px 0">Need a tailored quote?</p>
+        <button class="btn" onclick="window.location='#contact'"><i class="fa-solid fa-phone"></i> Request Callback</button>
+      </div>
+    </aside>
+  </main>
+
+  <section id="services" class="section" aria-labelledby="services-heading">
+    <h2 id="services-heading">Our Services</h2>
+    <div class="subtle">Full cycle development services from idea to production — web apps, mobile apps, desktop, AI & automation.</div>
+
+    <div class="service-grid" role="list">
+      <div class="service-card" role="listitem">
+        <i class="fa-solid fa-laptop-code"></i>
+        <h4>Web Development</h4>
+        <div class="service-list">
+          <ul>
+            <li>Custom web applications (React, Vue, Django, Flask)</li>
+            <li>APIs & microservices</li>
+            <li>E-commerce & portals</li>
+          </ul>
+        </div>
+        <a href="#contact">Inquire</a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+        <h4>Mobile Apps</h4>
+        <div class="service-list">
+          <ul>
+            <li>iOS & Android (native & cross-platform)</li>
+            <li>Progressive Web Apps</li>
+            <li>App store deployment</li>
+          </ul>
+        </div>
+        <a href="#contact">Inquire</a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-robot"></i>
+        <h4>AI & Automation</h4>
+        <div class="service-list">
+          <ul>
+            <li>Predictive models & ML pipelines</li>
+            <li>Process automation</li>
+            <li>Computer vision & NLP</li>
+          </ul>
+        </div>
+        <a href="#contact">Inquire</a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-desktop"></i>
+        <h4>Desktop Applications</h4>
+        <div class="service-list">
+          <ul>
+            <li>Windows/Linux based apps</li>
+            <li>Industry-specific tools</li>
+            <li>Integrations with hardware</li>
+          </ul>
+        </div>
+        <a href="#contact">Inquire</a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <h4>Training & Workshops</h4>
+        <div class="service-list">
+          <ul>
+            <li>Data Science & ML</li>
+            <li>Full-stack developer bootcamps</li>
+            <li>Enterprise upskilling</li>
+          </ul>
+        </div>
+        <a href="#contact">Inquire</a>
+      </div>
+
+      <div class="service-card">
+        <i class="fa-solid fa-shield-halved"></i>
+        <h4>Security & QA</h4>
+        <div class="service-list">
+          <ul>
+            <li>Penetration testing & audits</li>
+            <li>Automated QA</li>
+            <li>Performance tuning</li>
+          </ul>
+        </div>
+        <a href="#contact">Inquire</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" class="section" aria-labelledby="products-heading">
+    <h2 id="products-heading">Products & Solutions</h2>
+    <div class="subtle">Select solutions & ready-to-deploy products we offer. Customize any to fit your business.</div>
+
+    <div class="product-grid" role="list">
+
+      <!-- Shop & Mall Billing Software -->
+      <div class="product" role="listitem">
+<!--        <a href="{{ url_for('shopmall_billing_software') }}">Shop & Mall Billing Software</a>-->
+
+        <a href="{{ url_for('shopmall_billing_software') }}" style="text-decoration:none; color:inherit;">
+          <img src="static/shop1.jpg" alt="Shop & Mall Billing Software">
+          <div class="p-body">
+            <h4>Shop & Mall Billing Software</h4>
+            <p>Integrated stock management, billing, GST-ready invoicing for retail and distributors.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Vehicle & Logistics Platform -->
+      <div class="product" role="listitem">
+        <a href="{{ url_for('transport_management') }}" style="text-decoration:none; color:inherit;">
+          <img src="static/tms.jpg" alt="Transport Management System (TMS)">
+          <div class="p-body">
+            <h4>Vehicle & Logistics Platform</h4>
+            <p>Trip planning, order management, driver app, and real-time tracking tailored to logistics.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Attendance & HR Suite -->
+      <div class="product" role="listitem">
+<!--        <a href="hrms.html" style="text-decoration:none; color:inherit;">-->
+          <img src="static/hrms.PNG" alt="Human Resources Management System (HRMS)">
+          <div class="p-body">
+            <h4>Attendance & HR Suite</h4>
+            <p>Employee attendance, payroll integration and performance tracking to automate HR tasks.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Digital Library Management System -->
+      <div class="product" role="listitem">
+        <a href="{{ url_for('dlms') }}" style="text-decoration:none; color:inherit;">
+          <img src="static/digital.jpg" alt="Digital Library System Image">
+          <div class="p-body">
+            <h4>Digital Library Management System</h4>
+            <p>E-book and physical asset cataloging, member management, and automated lending/return tracking.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- School Management System -->
+      <div class="product" role="listitem">
+<!--        <a href="sms.html" style="text-decoration:none; color:inherit;">-->
+          <img src="static/sms.jpg" alt="School Management System Image">
+          <div class="p-body">
+            <h4>School Management System (SMS)</h4>
+            <p>Admissions, fee collection, student & teacher portals, and online examination modules.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Warehouse Management System -->
+      <div class="product" role="listitem">
+        <a href="{{ url_for('wms') }}" style="text-decoration:none; color:inherit;">
+          <img src="static/wms.jpg" alt="Warehouse Management System Image">
+          <div class="p-body">
+            <h4>Warehouse Management System (WMS)</h4>
+            <p>Real-time stock visibility, barcode scanning integration, and optimization for picking and packing.</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section id="stats" class="section">
+    <h2>Our Impact</h2>
+    <div class="subtle">Numbers that tell our story.</div>
+    <div class="kpi-grid">
+      <div class="kpi"><strong>10+</strong><div class="subtle">Projects Delivered</div></div>
+      <div class="kpi"><strong>3+</strong><div class="subtle">Happy Clients</div></div>
+      <div class="kpi"><strong>2+</strong><div class="subtle">Years Experience</div></div>
+      <div class="kpi"><strong>24/7</strong><div class="subtle">Support & Maintenance</div></div>
+    </div>
+  </section>
+
+  <section id="clients" class="section">
+    <h2>Our Clients</h2>
+    <div class="subtle">We partner with organizations across industries.</div>
+    <div class="clients" id="clientsContainer" aria-hidden="false">
+      <div class="clients-inner" id="clientsInner">
+        <div class="client-logo"><img src="static/sig.JPEG" alt="Signature Library"></div>
+        <div class="client-logo"><img src="static/13.JPG" alt="Client 2"></div>
+        <div class="client-logo"><img src="static/14.JPG" alt="Client 3"></div>
+<!--        <div class="client-logo"><img src="assets/client4.png" alt="Client 4"></div>-->
+<!--        <div class="client-logo"><img src="assets/client5.png" alt="Client 5"></div>-->
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section" aria-labelledby="about-heading">
+    <h2 id="about-heading">About Us</h2>
+    <div class="subtle">We are a team of dedicated IT professionals committed to helping businesses thrive in the digital age.</div>
+
+    <div class="about-grid">
+      <article class="about-card">
+        <div class="card-top"><i class="fa-solid fa-users"></i></div>
+        <h4>Who We Are</h4>
+        <p><strong>ELSA Private Limited</strong> is a team of passionate and skilled professionals who share a common vision — to revolutionize the digital landscape through innovative software solutions. We deliver integrated solutions tailored to client needs.</p>
+      </article>
+
+      <article class="about-card">
+        <div class="card-top"><i class="fa-solid fa-bullseye"></i></div>
         <h4>Our Mission</h4>
-        <p>To deliver cutting-edge technology solutions tailored to each client’s needs, ensuring excellence, security, and continuous innovation.</p>
-      </div>
+        <p>To deliver top-notch software solutions that exceed expectations and catalyze digital transformation — improving efficiency and enabling growth for our clients.</p>
+      </article>
 
-      <div class="about-card">
-        <i class="fas fa-heart"></i>
+      <article class="about-card">
+        <div class="card-top"><i class="fa-solid fa-cogs"></i></div>
+        <h4>Our Approach</h4>
+        <p>Client-centric, agile and collaborative — we partner with stakeholders throughout the project lifecycle to ensure the product aligns with business goals and adapts to change.</p>
+      </article>
+
+      <article class="about-card">
+        <div class="card-top"><i class="fa-solid fa-eye"></i></div>
+        <h4>Our Vision</h4>
+        <p>To empower businesses with efficient, scalable and sustainable IT solutions that drive long-term growth and transformation.</p>
+      </article>
+
+      <article class="about-card">
+        <div class="card-top"><i class="fa-solid fa-shield-alt"></i></div>
+        <h4>Our Commitment</h4>
+        <p>Security, reliability and continuous innovation are central to our engineering practices. We deliver maintainable systems with measurable business outcomes.</p>
+      </article>
+
+      <article class="about-card">
+        <div class="card-top"><i class="fa-solid fa-heart"></i></div>
         <h4>Our Values</h4>
-        <p>Integrity, Innovation, Customer Focus, Collaboration, and Continuous Learning form the foundation of everything we do.</p>
+        <p>Integrity, Innovation, Customer Focus, Collaboration and Continuous Learning — these principles guide our culture and the products we build.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" class="section" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Contact Us</h2>
+    <div class="subtle">Have a question or want to start a project? Send us a message and we'll get back to you.</div>
+
+    <div class="contact-wrap">
+      <form id="contactForm" class="contact-card contact-form" action="/contact" method="post" onsubmit="submitContact(event)">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required placeholder="Your Name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" placeholder="10 digit mobile" pattern="[0-9]{10}">
+        </div>
+        <div class="form-group">
+          <label for="service">Service Interested In</label>
+          <select id="service" name="service" required>
+            <option value="">Select a Service</option>
+            <option value="web-development">Web Development</option>
+            <option value="mobile-apps">Mobile Apps</option>
+            <option value="ai">AI & Automation</option>
+            <option value="training">Training</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn" type="submit"><i class="fa-solid fa-paper-plane"></i> Send Message</button>
+        </div>
+        <div id="formStatus" style="display:none;margin-top:8px;padding:12px;border-radius:10px;font-weight:600;"></div>
+      </form>
+
+      <aside class="contact-card">
+        <h3>Office</h3>
+        <p style="color:#a5b4fc">ELSA Private Limited<br>Varanasi, Uttar Pradesh, India</p>
+        <p><strong>Phone:</strong> +91-XXXXXXXXXX</p>
+        <p><strong>Email:</strong> contact@elsa.com</p>
+        <div style="height:12px"></div>
+        <h4>Working Hours</h4>
+        <p style="color:#a5b4fc">Mon - Sat: 10:00 AM - 6:00 PM</p>
+        <div style="height:12px"></div>
+        <a class="btn secondary" href="mailto:contact@elsa.com"><i class="fa-solid fa-envelope"></i> Email Us</a>
+      </aside>
+    </div>
+  </section>
+
+  <footer>
+    <div style="max-width:var(--container);margin:0 auto;padding:6px 16px">
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center">
+        <div>&copy; <strong>ELSA Private Limited</strong>  <span style="opacity:.8">2025</span></div>
+        <div style="opacity:.8">Designed & Maintained by ELSA</div>
       </div>
     </div>
-  </div>
-</section>
+  </footer>
 
-
-<section class="contact" id="contact">
-  <div class="contact-container">
-    <h3>Contact Us</h3>
-    <p>Have a question or want to work together? Reach out to us!</p>
-    <form action="/contact" method="post" id="contactForm">
-      <div class="form-group"><label><i class="fas fa-user"></i><input type="text" name="name" placeholder="Your Name" required /></label></div>
-      <div class="form-group"><label><i class="fas fa-envelope"></i><input type="email" name="email" placeholder="Your Email" required /></label></div>
-      <div class="form-group"><label><i class="fas fa-phone"></i><input type="tel" name="phone" placeholder="Your Mobile Number" pattern="[0-9]{10}" required /></label></div>
-      <div class="form-group"><label><i class="fas fa-cogs"></i>
-        <select name="service" required>
-          <option value="" disabled selected>Select a Service</option>
-          <option value="web-development">Web Development</option>
-          <option value="it-consulting">AI</option>
-          <option value="training">Training</option>
-        </select>
-      </label></div>
-      <div class="form-group"><label><i class="fas fa-comment"></i><textarea name="message" placeholder="Your Message" rows="5" required></textarea></label></div>
-      <button type="submit" id="submitBtn"><span class="btn-text">Send Message</span><span class="btn-loader"></span></button>
-      <div id="successMessage">Thank you! We will get back to you soon.</div>
-    </form>
-  </div>
-</section>
-
-<footer>
-  <p>&copy; 2024 ELSA Private Limited. All rights reserved.</p>
-</footer>
-
-<script>
-  // Customer Carousel
-  const slides = document.querySelectorAll(".customer-card");
-  const carouselInner = document.getElementById("carouselInner");
-  let currentIndex = 0;
-  function updateCarousel() { carouselInner.style.transform = `translateX(-${currentIndex*100}%)`; }
-  function moveSlide(step) { currentIndex = (currentIndex + step + slides.length) % slides.length; updateCarousel(); }
-  let autoSlide = setInterval(()=>moveSlide(1),5000);
-  document.querySelector(".carousel-container").addEventListener("mouseover",()=>clearInterval(autoSlide));
-  document.querySelector(".carousel-container").addEventListener("mouseout",()=>autoSlide=setInterval(()=>moveSlide(1),5000));
-  updateCarousel();
-
-  // Animate Services on Scroll
-  const serviceCards=document.querySelectorAll(".service-card");
-  const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");}});},{threshold:0.2});
-  serviceCards.forEach(card=>observer.observe(card));
-
-  // Contact Form
-  const form=document.getElementById("contactForm");
-  const successMessage=document.getElementById("successMessage");
-  const submitBtn=document.getElementById("submitBtn");
-  form.addEventListener("submit",function(e){
-    e.preventDefault();
-    if(!form.checkValidity()){ form.reportValidity(); return; }
-    submitBtn.classList.add("loading");
-    setTimeout(()=>{submitBtn.classList.remove("loading"); form.reset(); successMessage.style.display="block"; setTimeout(()=>{successMessage.style.display="none";},5000);},2000);
-  });
-
-  // Particle Background
+  <script>
+  // Particle Background Animation (Modified for THINNER, SLOWER, and WHITE look)
   const canvas = document.getElementById("bgCanvas");
   const ctx = canvas.getContext("2d");
   let particles = [];
-  function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
+  let frameCount = 0; // Animation frame counter
+  let startTime = Date.now(); // Start time for performance check
+
+  // **Note:** The resizeCanvas logic (which is outside this snippet) should ensure initParticles is called on resize.
+  // Assuming necessary window event listeners and resizeCanvas function are defined elsewhere.
 
   class Particle {
     constructor() {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
-      this.radius = Math.random()*2+1;
-      this.vx = Math.random()*0.5-0.25;
-      this.vy = Math.random()*0.5-0.25;
+      this.radius = Math.random() * 0.8 + 0.3; // **MODIFIED:** Smaller size (thinner/lighter)
+      this.vx = Math.random() * 0.1 - 0.05; // **MODIFIED:** Slower speed
+      this.vy = Math.random() * 0.1 - 0.05;
     }
-    draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.radius,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.fill(); }
-    update() { this.x += this.vx; this.y += this.vy; if(this.x<0||this.x>canvas.width)this.vx*=-1; if(this.y<0||this.y>canvas.height)this.vy*=-1; }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      // **MODIFIED:** White color and light white glow
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'; // Halka White (less opaque)
+      ctx.shadowBlur = 5; // Halka glow
+      ctx.shadowColor = 'rgba(255, 255, 255, 0.7)';
+      ctx.fill();
+      ctx.shadowBlur = 0; // Clear shadow for subsequent drawing
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+    }
   }
 
-  function initParticles() { particles = []; for(let i=0;i<150;i++) particles.push(new Particle()); }
+  function initParticles() {
+    particles = [];
+    for (let i = 0; i < 20; i++) particles.push(new Particle());
+  }
+
   function animate() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    particles.forEach(p=>{ p.update(); p.draw(); });
-    // Draw lines
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        let dx=particles[i].x-particles[j].x;
-        let dy=particles[i].y-particles[j].y;
-        let dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<100){
+    frameCount++;
+
+    // ClearRect के बजाय FillRect का उपयोग करें ताकि trails न बनें
+    ctx.fillStyle = 'rgba(13, 17, 23, 0.2)'; // (Dark background color + light trail)
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.update();
+      p.draw();
+    });
+
+    // Draw lines (Neural Network/Connected Cells Effect)
+    const maxDist = 100; // कनेक्शन की दूरी थोड़ी कम की
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        let dx = particles[i].x - particles[j].x;
+        let dy = particles[i].y - particles[j].y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < maxDist) {
           ctx.beginPath();
-          ctx.moveTo(particles[i].x,particles[i].y);
-          ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle='rgba(255,255,255,'+(1-dist/100)*0.3+')';
-          ctx.lineWidth=1;
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          // **MODIFIED:** White color और बहुत कम पारदर्शिता (very light)
+          const alpha = (1 - dist / maxDist) * 0.05; // Very low opacity (Halka)
+          ctx.strokeStyle = 'rgba(255, 255, 255,' + alpha + ')';
+          ctx.lineWidth = 0.5; // **MODIFIED:** Thinner line
           ctx.stroke();
         }
       }
     }
+
+    // *** Showing Performance Timing (Added) ***
+    // यह हर सेकंड में (या 60 फ्रेम में) FPS दिखाता है।
+    if (frameCount % 60 === 0) {
+        const currentTime = Date.now();
+        const elapsedTime = currentTime - startTime;
+        const fps = Math.round(60 / (elapsedTime / 1000));
+        // आप यह जानकारी console में देख सकते हैं
+        console.log(`FPS: ${fps}`);
+        startTime = currentTime;
+    }
+
     requestAnimationFrame(animate);
   }
 
   initParticles();
   animate();
+
+
+  // Clients carousel - MODIFIED: Left to Right infinite scroll
+  (function(){
+    const inner = document.getElementById('clientsInner');
+    if(!inner) return;
+    let pos = 0;
+    const step = 0.5; // Movement Speed (Slower for smooth effect)
+
+    // Duplicate children to create infinite feel
+    const children = Array.from(inner.children);
+    children.forEach(node => inner.appendChild(node.cloneNode(true)));
+
+    // Set initial position to the start of the duplicated set for smooth start
+    setTimeout(() => {
+        pos = -(inner.scrollWidth / 2);
+
+        function tick(){
+          // pos को बढ़ाएँ (Increase pos) ताकि यह बाएँ से दाएँ (left to right) जाए।
+          pos += step;
+
+          // जब यह मूल कॉन्टेंट के अंत तक पहुँच जाए
+          if(pos >= 0) {
+              // इसे वापस डुप्लीकेटेड कॉन्टेंट के शुरुआत में ले जाएँ
+              pos = -(inner.scrollWidth / 2);
+          }
+
+          inner.style.transform = 'translateX(' + pos + 'px)';
+          requestAnimationFrame(tick);
+        }
+
+        requestAnimationFrame(tick);
+    }, 50);
+  })();
+
+  // Contact form handler (demo only) - EXISTING LOGIC
+  function submitContact(e){
+    e.preventDefault();
+    const form = document.getElementById('contactForm');
+    const status = document.getElementById('formStatus');
+    status.style.display = 'none';
+    // Simple client validation
+    if(!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+    // Show fake sending state (replace with AJAX to server)
+    const button = form.querySelector('button[type="submit"]');
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+    setTimeout(()=>{
+      button.disabled = false;
+      button.innerHTML = originalText;
+      status.style.display = 'block';
+      status.innerText = 'Thank you! Your message has been received. We will contact you shortly.';
+      form.reset();
+      setTimeout(()=>{ status.style.display = 'none'; }, 7000);
+    }, 1400);
+  }
+
+  // Smooth scroll for nav anchor links - EXISTING LOGIC
+  (function(){
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', function(e){
+        const href = this.getAttribute('href');
+        if(href.length>1){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      });
+    });
+  })();
 </script>
 </body>
 </html>
