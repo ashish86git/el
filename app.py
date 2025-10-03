@@ -140,5 +140,21 @@ def contact():
     return render_template('contact.html')
 
 
+# Shop & Mall Billing Software Page
+@app.route("/shopmall_billing_software")
+def shopmall_billing_software():
+    return render_template("shopmall_billing_software.html")
+
+@app.route("/transport_management")
+def transport_management():
+    return render_template("transport_management.html")
+
+@app.route("/dlms")
+def dlms():
+    return render_template("dlms.html")
+@app.route("/wms")
+def wms():
+    return render_template("wms.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
